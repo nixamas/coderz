@@ -1,21 +1,22 @@
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 
-public class CamelTrading {
+public class Testing {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new CamelTrading();
+		// TODO Auto-generated method stub
+		Testing t = new Testing();
 	}
 	
-	public CamelTrading(){
+	public Testing(){
 		FileReader fin;
 		try {
 			fin = new FileReader("cameltrading.txt");
@@ -23,9 +24,9 @@ public class CamelTrading {
 			src.useDelimiter(" ");
 
 			while (src.hasNext()) {
-				String eq = src.nextLine();	//get equation
-				Equation tst = new Equation(eq);	//new equation obj
-			    print( " [ MINIMUM ] :: [ MAXIMUM ]  ----  " + tst.doOp("*") + " :: " + tst.doOp("+") + " " );	//mult 1st will give min, add 1st will give max
+				String eq = src.nextLine();
+				Equation tst = new Equation(eq);
+			    print( " [ MINIMUM ] :: [ MAXIMUM ]  ----  " + tst.doOp("*") + " :: " + tst.doOp("+") + " " );
 			}
 
 			src.close();
@@ -39,42 +40,42 @@ public class CamelTrading {
 	 */
 	class Equation {
 		
-		List<Object> eqObjs;
+		List<Object> objs;
 		
 		public Equation(String eq){
-			eqObjs = new ArrayList<Object>();
+			objs = new ArrayList<Object>();
 			int tmp = -1;
 			for( int i = 0;  i < eq.length(); i++ ){
 				char c = eq.charAt(i);
-				if( Character.isDigit(c) ){	// char is a digit
+				if( Character.isDigit(c) ){
 					if( tmp != -1 ){
-						int tmp2 = tmp*10;	//digit with 2 numbers
+						int tmp2 = tmp*10;
 						tmp = Integer.parseInt( Character.toString(c) );
-						eqObjs.add(tmp2 + tmp);
+						objs.add(tmp2 + tmp);
 						tmp = -1;
-					}else{					//single number digit
+					}else{
 						tmp = Integer.parseInt( Character.toString(c) );
 					}
 				}else{
 					if(tmp != -1){
-						eqObjs.add(tmp);	//add tmp obj b4 operator
+						objs.add(tmp);
 						tmp = -1;
-					}						//add operator
-					eqObjs.add(Character.toString(c));
+					}
+					objs.add(Character.toString(c));
 				}
 			}
 			if(tmp != -1){
-				eqObjs.add(tmp);			//add final operand
+				objs.add(tmp);
 			}
 		}
 		
 		
 		public String doOp(String op){
-			List<Object> eq = new ArrayList<Object>(eqObjs);
+			List<Object> eq = new ArrayList<Object>(objs);
 			for(int i = 0; i < eq.size(); i++){
 				Object o = eq.get(i);
-				if( o instanceof String){		//search 4 operands
-					if( o.equals( op ) ){		//only operate on operators that match the 1st
+				if( o instanceof String){
+					if( o.equals( op ) ){
 						int op2 = (Integer) eq.remove( i + 1 ) ;
 						int op1 = (Integer) eq.remove( i - 1 ) ;
 						if( op.equals("*") ){
@@ -91,16 +92,16 @@ public class CamelTrading {
 			}
 			for(int i = 0; i < eq.size(); i++){
 				Object o = eq.get(i);
-				if( o instanceof String){			//seach 4 operands
-					if( !o.equals( op ) ){			//Now do the operators that do not match
+				if( o instanceof String){
+					if( !o.equals( op ) ){
 						int op2 = (Integer) eq.remove( i + 1 ) ;
 						int op1 = (Integer) eq.remove( i - 1 ) ;
-						if( op.equals("*") ){	
+						if( op.equals("*") ){
 //							print("add");
-							eq.set(i-1, (op1 + op2) );//remember do the opposite operation here		
+							eq.set(i-1, (op1 + op2) );		//remember do the opposite here
 						}else if( op.equals("+") ){
 //							print("mult");
-							eq.set(i-1, (op1 * op2) );//remember do the opposite operation here
+							eq.set(i-1, (op1 * op2) );
 						}
 //						print("done SECOND operation :::: " + eq.toString());
 						i = 0;
