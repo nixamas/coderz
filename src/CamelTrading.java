@@ -25,9 +25,9 @@ public class CamelTrading {
 			while (src.hasNext()) {
 				String eq = src.nextLine();	//get equation
 				Equation tst = new Equation(eq);	//new equation obj
-			    print( " [ MINIMUM ] :: [ MAXIMUM ]  ----  " + tst.doOp("*") + " :: " + tst.doOp("+") + " " );	//mult 1st will give min, add 1st will give max
+//			    print( " [ MINIMUM ] :: [ MAXIMUM ]  ----  " + tst.doOp("*") + " :: " + tst.doOp("+") + " " );	//mult 1st will give min, add 1st will give max
+			    print( "The minimum and maximum are " + tst.doOp("*") + " and " + tst.doOp("+") );
 			}
-
 			src.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
